@@ -30,6 +30,17 @@
 ```
     pip install -r requirements.txt
 ```
+### For creating django application use the command 
+
+```
+    django-admin startproject Project 
+```
+> This will create one folder having and inside that folder it create our project that having the manage.py file.
+
+```
+    django-admin startproject Project .
+```
+> This will create folder and manage.py file it not create one extra folder.
 
 ### After installation to run the make migration and migrate command
 
