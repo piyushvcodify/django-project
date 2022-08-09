@@ -80,6 +80,13 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#        'default': {
+#            'ENGINE': 'djongo',
+#            'NAME': 'attendance_management_systemDB',
+#        }
+#    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
