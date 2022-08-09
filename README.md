@@ -80,10 +80,11 @@ The project is coded using a simple and intuitive structure presented below:
 ```bash
 < PROJECT ROOT >
    |
-   |-- core/                               # Implements app configuration
+   |-- Project/                               # Implements app configuration
+   |    |-- asgi.py                        # ASGI stands for Asynchronous Server Gateway interface
    |    |-- settings.py                    # Defines Global Settings
-   |    |-- wsgi.py                        # Start the app in production
    |    |-- urls.py                        # Define URLs served by all apps/nodes
+   |    |-- wsgi.py                        # Start the app in production and wsgi stand for Web Server Gateway Interface
    |
    |-- apps/
    |    |
@@ -121,7 +122,6 @@ The project is coded using a simple and intuitive structure presented below:
    |
    |-- requirements.txt                     # Development modules - SQLite storage
    |
-   |-- .env                                 # Inject Configuration via Environment
    |-- manage.py                            # Start the app - Django default start script
    |
    |-- ************************************************************************
