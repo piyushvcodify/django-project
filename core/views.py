@@ -1,95 +1,59 @@
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import permissions
 from .models import Employee
 from .serializers import EmployeeSerializer
 
-class EmployeeListApiView(APIView):
-    # add permission to check if user is authenticated
-    # permission_classes = [permissions.IsAuthenticated]
+@api_view(['GET'])
+def apiOverview(request):
+	api_urls = {
+		'List':'http://127.0.0.1:8000/employee-list/',
+		'Detail View':'http://127.0.0.1:8000/employee-detail/<str:pk>/',
+		'Create':'http://127.0.0.1:8000/employee-create/',
+		'Update':'http://127.0.0.1:8000/employee-update/<str:pk>/',
+		'Delete':'http://127.0.0.1:8000/employee-delete/<str:pk>/',
+		}
 
-    def get_object(self, emp_id):
-        '''
-        Helper method to get the object with given todo_id, and user_id
-        '''
-        try:
-            return Employee.objects.get(id=emp_id)
-        except Employee.DoesNotExist:
-            return None
+	return Response(api_urls,status=status.HTTP_200_OK)
 
-     # 3. Retrieve
-    def get(self, request, emp_id, *args, **kwargs):
-        '''
-        Retrieves the Employee with given emp_id
-        '''
-        emp_instance = self.get_object(emp_id)
-        if not emp_instance:
-            return Response(
-                {"res": "Object with Employee id does not exists"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+@api_view(['GET'])
+def employeeList(request):
+	employees = Employee.objects.all().order_by('-id')
+	serializer = EmployeeSerializer(employees, many=True)
+	return Response(serializer.data,status=status.HTTP_200_OK)
 
-        serializer = EmployeeSerializer(emp_instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    # 2. Create
-    def post(self, request, *args, **kwargs):
-        '''
-        Create the employee with given employee data
-        '''
-        data = {
-            "employee_Id": request.data.get('employee_Id'),
-            "employee_first_name": request.data.get('employee_first_name'),
-            "employee_last_name": request.data.get('employee_last_name'),
-            "job_name": request.data.get('job_name'),
-            "date_of_joinning": request.data.get('date_of_joinning'),
-            "department_name": 2
-        }
-
-        obj = Employee.objects.filter(employee_Id=request.data.get('employee_Id'))
-        if not obj:
-            serializer = EmployeeSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response("Passed employee_Id already exists.", status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def employeeDetail(request, pk):
+	employees = Employee.objects.get(id=pk)
+	serializer = EmployeeSerializer(employees, many=False)
+	return Response(serializer.data,status=status.HTTP_200_OK)
 
 
-    
-    def put(self, request, emp_id, *args, **kwargs):
-            '''
-            Updates the todo item with given todo_id if exists
-            '''
-            emp_instance = self.get_object(emp_id)
-            if not emp_instance:
-                return Response(
-                    {"res": "Object with employee id does not exists"}, 
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+@api_view(['POST'])
+def employeeCreate(request):
+	serializer = EmployeeSerializer(data=request.data)
 
-            serializer = EmployeeSerializer(instance = emp_instance, data=request.data, partial = True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	if serializer.is_valid():
+		serializer.save()
 
-    
-    def delete(self, request, emp_id, *args, **kwargs):
-        '''
-        Deletes the todo item with given todo_id if exists
-        '''
-        todo_instance = self.get_object(emp_id, request.user.id)
-        if not todo_instance:
-            return Response(
-                {"res": "Object with todo id does not exists"}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        todo_instance.delete()
-        return Response(
-            {"res": "Object deleted!"},
-            status=status.HTTP_200_OK
-        )
+	return Response(serializer.data,status=status.HTTP_201_CREATED)
+
+@api_view(['PUT'])
+def employeeUpdate(request, pk):
+	employees = Employee.objects.get(id=pk)
+	serializer = EmployeeSerializer(instance=employees, data=request.data)
+
+	if serializer.is_valid():
+		serializer.save()
+
+	return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+def employeeDelete(request, pk):
+	employee = Employee.objects.get(id=pk)
+	employee.delete()
+
+	return Response('Item succsesfully delete!',status=status.HTTP_200_OK)
 
 
