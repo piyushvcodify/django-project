@@ -96,30 +96,12 @@ The project is coded using a simple and intuitive structure presented below:
    |-- authentication/                # Handles auth routes (login and register)
    |    |-- urls.py                   # Define authentication routes  
    |    |-- views.py                  # Handles login and registration  
-   |    |-- forms.py                  # Define auth forms (login and register) 
-   |    
-   |-- static/
-   |    |-- <css, JS, images>         # CSS files, Javascripts files
-   |    
-   |-- templates/                     # Templates used to render pages
-   |    |-- includes/                 # HTML chunks and components
-   |         |-- navigation.html      # Top menu component
-   |         |-- sidebar.html         # Sidebar component
-   |         |-- footer.html          # App Footer
-   |         |-- scripts.html         # Scripts common to all pages
-   |         
-   |    |-- layouts/                   # Master pages
-   |         |-- base-fullscreen.html  # Used by Authentication pages
-   |         |-- base.html             # Used by common pages
+   |    |-- forms.py                  # Define auth forms (login and register)       
    |         
    |    |-- accounts/                  # Authentication pages
    |         |-- login.html            # Login page
    |         |-- register.html         # Register page
    |         
-   |    |-- core/                      # UI Kit Pages
-   |         |-- index.html            # Index page
-   |         |-- 404-page.html         # 404 page
-   |         |-- *.html                # All other pages
    |
    |-- requirements.txt                     # Development modules - SQLite storage
    |
