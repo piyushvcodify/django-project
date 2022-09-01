@@ -2,4 +2,5 @@ env/
 venv/
 db.sqlite3
 migrations/
-__pychace__/
+core/__pychace__/
+authentication/__pychace__/
