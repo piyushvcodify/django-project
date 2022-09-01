@@ -14,7 +14,11 @@ def apiOverview(request):
 		'Create':'http://127.0.0.1:8000/employee-create/',
 		'Update':'http://127.0.0.1:8000/employee-update/<str:pk>/',
 		'Delete':'http://127.0.0.1:8000/employee-delete/<str:pk>/',
-		'filter':'http://127.0.0.1:8000/employee-filter/<str:pk>/',
+		'filter':
+		{'employee_Id':'http://127.0.0.1:8000/employee-filter/<str:employee_Id>',
+		'job_name':'http://127.0.0.1:8000/employee-filter/<str:job_name>',
+		'date_of_joinning':'http://127.0.0.1:8000/employee-filter/<str:YYYY-MM-DD>'
+		}
 		}
 		}
 
